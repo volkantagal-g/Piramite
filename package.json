@@ -7,8 +7,8 @@
     "piramite": "./bin/piramite.js"
   },
   "engines": {
-    "node": ">= 10.15.0",
-    "npm": ">=6.4"
+    "node": ">= v20.19.3",
+    "npm": ">=10.8.2"
   },
   "publishConfig": {
     "access": "public"
@@ -102,6 +102,9 @@
     "@cfaester/enzyme-adapter-react-18": "^0.8.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.6.1",
     "@svgr/webpack": "^5.5.0",
+    "@types/node": "^24.0.10",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
     "ajv": "^6.12.6",
     "ajv-keywords": "^3.5.2",
     "auto-changelog": "^2.2.1",
@@ -112,13 +115,14 @@
     "enzyme-to-json": "^3.6.1",
     "jest": "^26.6.3",
     "react-refresh": "^0.17.0",
-    "sass-resources-loader": "^2.2.5"
+    "sass-resources-loader": "^2.2.5",
+    "typescript": "^5.8.3"
   },
   "scripts": {
     "lint": "npm run eslint && npm run prettier",
     "eslint": "eslint 'src/**/*.js' --fix",
     "prettier": "prettier --write 'src/**/*.{js,scss}' --config .prettierrc.json",
-    "start": "piramite --config ./demo/piramite-app.config.js --dev",
+    "dev": "piramite --config ./demo/piramite-app.config.js --dev",
     "serve": "piramite --config ./demo/piramite-app.config.js",
     "test": "jest",
     "test:watchAll": "jest --watchAll",
