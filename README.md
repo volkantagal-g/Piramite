@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a><img src="./src/assets/voltran-logo.png" alt="piramite.js" width="220"></a>
+  <a><img src="./src/assets/piramite.png" alt="piramiteJS" width="220"></a>
   <br>
   Micro Frontends Framework
   <br>
@@ -21,7 +21,7 @@
 
 ### Key Features
 
-You can use Voltran if you need a micro frontend framework that provides following features:
+You can use Piramite if you need a micro frontend framework that provides following features:
 
 - Lightweight and fast API
 - Serves single and multiple components
@@ -32,7 +32,7 @@ You can use Voltran if you need a micro frontend framework that provides followi
 
 ## Installation
 
-Voltran requires [Node.js](https://nodejs.org/) v10.15.0+ to run.
+Piramite requires [Node.js](https://nodejs.org/) v20.19.3+ to run.
 
 Install the Piramite.
 
@@ -159,7 +159,7 @@ Hello World. My Name is Volkan!
 
 ## Configs
 
-Voltran requires following configurations:
+Piramite requires following configurations:
 
 | **Config**                                    | **Type**             |
 | --------------------------------------------- | -------------------- |
@@ -218,7 +218,7 @@ The path to the folder that contains script files. It's required.
 
 Passes this config to Babel Loader where it reads all js files under this folder.
 
-'Voltran' converts your files to the appropriate format and optimizes them.
+'Piramite' converts your files to the appropriate format and optimizes them.
 
 #### monitoring
 
@@ -249,7 +249,7 @@ monitoring: {
 
 `It is required.`
 
-There may be different components owned by different teams using piramtes on the same page. Voltran needs to use a prefix in order to avoid conflicts issues.
+There may be different components owned by different teams using piramtes on the same page. Piramite needs to use a prefix in order to avoid conflicts issues.
 This prefix is prepended to initial states and CSS class names.
 
 > We recommend that each team use their own acronyms/prefixes.
@@ -257,7 +257,7 @@ This prefix is prepended to initial states and CSS class names.
 #### ssr
 
 `Default`: `true`
-Voltran supports server side rendering.
+Piramite supports server side rendering.
 Applications that need 'SEO' features needs to set this parameter to `true`.
 
 #### styles
@@ -300,7 +300,7 @@ staticProps: [
 
 #### routing
 
-Voltran need two files to set routing.
+Piramite need two files to set routing.
 
 ```
 routing: {
@@ -329,11 +329,11 @@ You can check [sass-resource-loader](https://github.com/shakacode/sass-resources
 
 Add `newrelicEnabled: true` on your config.
 
-If you throw an error like `throw new Error({message: "Service error", code: 500})` from your fragments, Voltran detects the fields and sends each field to New Relic as a custom attribute. These fields appear with `_a` prefix to place in the first of rows on your new relic.
+If you throw an error like `throw new Error({message: "Service error", code: 500})` from your fragments, Piramite detects the fields and sends each field to New Relic as a custom attribute. These fields appear with `_a` prefix to place in the first of rows on your new relic.
 
 ## Tech
 
-Voltran uses a number of open source projects to work properly:
+Piramite uses a number of open source projects to work properly:
 
 - [ReactJS] - A JavaScript library for building user interfaces!
 - [Webpack] - Module bundler

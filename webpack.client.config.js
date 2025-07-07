@@ -124,6 +124,26 @@ const clientConfig = merge(commonConfig, piramiteClientConfig, {
         issuer: { not: [/\.[jt]sx?$/] },
       },
       {
+        test: /\.(ts|tsx)$/,
+        use: [
+          {
+            loader: 'esbuild-loader',
+            options: {
+              loader: 'tsx',
+              target: 'es2015',
+              ...(isDebug ? { jsxDev: true } : {})
+            }
+          },
+          {
+            loader: 'string-replace-loader',
+            options: {
+              multiple: [...replaceString()]
+            }
+          }
+        ],
+        include: [path.resolve(__dirname, "src"), piramiteConfig.inputFolder],
+      },
+      {
         test: reScript,
         loader: "esbuild-loader",
         include: [path.resolve(__dirname, "src"), piramiteConfig.inputFolder],
@@ -134,7 +154,7 @@ const clientConfig = merge(commonConfig, piramiteClientConfig, {
         }
       },
       {
-        test: /\.js$/,
+        test: /\.(js|ts|tsx)$/,
         loader: "string-replace-loader",
         options: {
           multiple: [...replaceString()]
@@ -222,7 +242,7 @@ const clientConfig = merge(commonConfig, piramiteClientConfig, {
       {
         test: /\.(woff2?|eot|ttf|otf)$/i,
         exclude: /\.svg$/,
-      },
+      }
     ]
   },
 
@@ -248,7 +268,8 @@ const clientConfig = merge(commonConfig, piramiteClientConfig, {
     alias: {
       "react": path.resolve(process.cwd(), "node_modules/react"),
       "react-dom": path.resolve(process.cwd(), "node_modules/react-dom")
-    }
+    },
+    extensions: [".tsx", ".ts", ".js", ".jsx", ".mjs"],
   },
 
   plugins: [

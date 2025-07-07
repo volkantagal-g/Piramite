@@ -16,7 +16,6 @@ const postCssConfig = require('./postcss.config');
 const packageJson = require(path.resolve(process.cwd(), 'package.json'));
 const replaceString = require('./config/string.js');
 
-const distFolderPath = piramiteConfig.distFolder;
 const isDebug = piramiteConfig.dev;
 
 let styles = '';
@@ -63,11 +62,20 @@ const serverConfig = merge(commonConfig, piramiteServerConfig, {
         },
       },
       {
-        test: /\.js$/,
-        loader: 'string-replace-loader',
+        test: /\.tsx?$/,
+        loader: "esbuild-loader",
+        include: [path.resolve(__dirname, "src"), piramiteConfig.inputFolder],
         options: {
-          multiple: [...replaceString()],
-        },
+          loader: "tsx",
+          target: "es2015"
+        }
+      },
+      {
+        test: /\.(js|ts|tsx)$/,
+        loader: "string-replace-loader",
+        options: {
+          multiple: [...replaceString()]
+        }
       },
       {
         test: /\.scss$/,
@@ -126,7 +134,11 @@ const serverConfig = merge(commonConfig, piramiteServerConfig, {
     }),
 
     ...(isDebug ? [new webpack.HotModuleReplacementPlugin()] : [])
-  ]
+  ],
+
+  resolve: {
+    extensions: [".tsx", ".ts", ".js", ".jsx", ".mjs"],
+  }
 });
 
 module.exports = serverConfig;

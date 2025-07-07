@@ -13,7 +13,7 @@ const Welcome = () => {
 
   const renderItem = item => (
     <ListItem>
-      <Link href={item.previewUrl ? item.previewUrl : `${item.url}?preview`} target='_blank'>
+      <Link href={item.previewUrl ? item.previewUrl : `${item.url}?preview`} target="_blank">
         <Name>{item.name}</Name>
         <Url>{item.url}</Url>
         <Footer>
