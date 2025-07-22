@@ -2,7 +2,7 @@
   <br>
   <a><img src="./src/assets/piramite.png" alt="piramiteJS" width="220"></a>
   <br>
-  Micro Frontends Framework
+  PiramiteJS - Micro Frontends Framework
   <br>
 </h1>
 
