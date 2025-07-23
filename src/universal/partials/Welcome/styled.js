@@ -6,8 +6,23 @@ const STATUS_COLOR = {
 };
 export const List = styled.ul`
   list-style: none;
+  width: 100%;
   margin: 0;
   padding: 0;
+`;
+
+export const Description = styled.div`
+  font-size: 12px;
+  padding: 0;
+  margin: 10px;
+  color: #666;
+`;
+
+export const NoContentDescription = styled.div`
+  font-size: 12px;
+  padding: 16px 0;
+  margin: 10px;
+  color: #900;
 `;
 
 export const HeaderName = styled.div`

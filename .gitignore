@@ -32,3 +32,6 @@ package-lock.json
 yarn.lock
 demo
 piramite.config.js
+
+# NPM configuration
+.npmrc
