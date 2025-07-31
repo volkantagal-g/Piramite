@@ -14,10 +14,10 @@ function getPiramitePort() {
     const jsonStr = configContent.replace('module.exports = ', '').replace(/,$/, '');
     const config = JSON.parse(jsonStr);
 
-    return config.port || 3578;
+    return config.port || 8080;
   } catch (error) {
-    console.log('Config dosyası okunamadı, varsayılan port 3578 kullanılıyor');
-    return 3578;
+    console.log('Config dosyası okunamadı, varsayılan port 8080 kullanılıyor');
+    return 8080;
   }
 }
 

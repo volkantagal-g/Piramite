@@ -81,7 +81,7 @@ If you want to fetch data from server side, you should add `getInitialState`.
 **./conf/local.config.js**
 
 ```js
-const port = 3578;
+const port = 8080;
 
 module.exports = {
   port: port,
@@ -240,7 +240,7 @@ monitoring: {
 
 #### port
 
-`Default`: `3578`
+`Default`: `8080`
 
 > If you want to change the port
 > you may need to change the port in appConfigFiles

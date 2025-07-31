@@ -1,5 +1,9 @@
 function registerControllers(hiddie) {
-  hiddie.use('/api/status', (req, res) => {
+  hiddie.use('/health', (req, res) => {
+    res.json({ status: true });
+  });
+
+  hiddie.use('/liveness', (req, res) => {
     res.json({ status: true });
   });
 }
