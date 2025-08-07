@@ -1,6 +1,6 @@
 {
   "name": "piramitejs",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "main": "src/index.js",
   "author": "",
   "bin": {
@@ -121,6 +121,8 @@
   },
   "scripts": {
     "lint": "npm run eslint && npm run prettier",
+    "build": "piramite --config ./demo/piramite-app.config.js --bundle",
+    "start": "piramite --config ./demo/piramite-app.config.js --start",
     "eslint": "eslint 'src/**/*.js' --fix",
     "prettier": "prettier --write 'src/**/*.{js,scss}' --config .prettierrc.json",
     "dev": "node scripts/dev-with-browser.js",
@@ -135,5 +137,6 @@
     "commitLimit": false,
     "template": "changelog-template.hbs",
     "package": true
-  }
+  },
+  "packageManager": "yarn@4.9.2+sha512.1fc009bc09d13cfd0e19efa44cbfc2b9cf6ca61482725eb35bbc5e257e093ebf4130db6dfe15d604ff4b79efd8e1e8e99b25fa7d0a6197c9f9826358d4d65c3c"
 }
