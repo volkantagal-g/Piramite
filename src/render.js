@@ -18,6 +18,26 @@ const appConfig = require('__APP_CONFIG__');
 
 // eslint-disable-next-line consistent-return
 export default async (req, res) => {
+  let rawBody = req.body || {};
+
+  // Eğer rawBody string ise ve form data formatında ise parse et
+  if (typeof rawBody === 'string' && rawBody.includes('=')) {
+    try {
+      // URL encoded form data'yı parse et
+      const parsedBody = {};
+      rawBody.split('&').forEach(pair => {
+        const [key, value] = pair.split('=');
+        if (key && value !== undefined) {
+          // URL decode et
+          parsedBody[decodeURIComponent(key)] = decodeURIComponent(value);
+        }
+      });
+      rawBody = parsedBody;
+    } catch (error) {
+      console.log('Form data parse hatası:', error);
+    }
+  }
+  
   const isWithoutStateValue = isWithoutState(req.query);
   const pathParts = xss(req.path)
     .split('/')
@@ -35,6 +55,7 @@ export default async (req, res) => {
       url: xss(req.url)
         .replace(componentPath, '/')
         .replace('//', '/'),
+      rawBody,
       userAgent: Buffer.from(req.headers['user-agent'], 'utf-8').toString('base64'),
       isWithoutState: isWithoutStateValue
     };

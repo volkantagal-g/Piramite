@@ -104,6 +104,32 @@ const handleUrls = async (req, res, next) => {
   }
 };
 
+// Body parser middleware for POST requests
+const bodyParser = async (req, res, next) => {
+  if (req.method === 'POST' || req.method === 'PUT' || req.method === 'PATCH') {
+    let body = '';
+    
+    req.on('data', chunk => {
+      body += chunk.toString();
+    });
+    
+    req.on('end', () => {
+      try {
+        if (req.headers['content-type']?.includes('application/json')) {
+          req.body = JSON.parse(body);
+        } else {
+          req.body = body;
+        }
+      } catch (error) {
+        req.body = body;
+      }
+      next();
+    });
+  } else {
+    next();
+  }
+};
+
 const cors = async (req, res, next) => {
   const { corsWhiteListDomains } = piramiteConfig;
   const { origin } = req.headers;
@@ -114,6 +140,7 @@ const cors = async (req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
   }
   res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, HEAD, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
 
   if (req.method === 'OPTIONS') {
     res.writeHead(HTTP_STATUS_CODES.OK);
@@ -170,6 +197,7 @@ if (process.env.NODE_ENV === 'production') {
   hiddie.use(compression());
   hiddie.use(locals);
   hiddie.use(helmet());
+  hiddie.use(bodyParser);
   hiddie.use(cors);
   hiddie.use('/', serveStatic(`${piramiteConfig.distFolder}/public`));
   bundleAnalyzerStaticEnabled &&
@@ -198,6 +226,7 @@ export default () => {
     compression(),
     locals,
     helmet(),
+    bodyParser,
     serveStatic(`${piramiteConfig.distFolder}/public`),
     cookieParser(),
     utils,
