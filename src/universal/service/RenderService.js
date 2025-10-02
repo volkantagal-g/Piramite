@@ -9,7 +9,7 @@ import ServerApiManagerCache from '../core/api/ServerApiManagerCache';
 import createBaseRenderHtmlProps from '../utils/baseRenderHtml';
 import { guid } from '../utils/helper';
 
-const getStates = async (component, context, predefinedInitialState) => {
+const getStates = async (component, context, predefinedInitialState, rawBody = {}) => {
   const initialState = predefinedInitialState || { data: {} };
   let subComponentFiles = [];
   let seoState = {};
@@ -23,6 +23,8 @@ const getStates = async (component, context, predefinedInitialState) => {
     const services = component.services.map(serviceName => ServerApiManagerCache[serviceName]);
     initialState.data = await component.getInitialState(...[...services, context]);
   }
+
+  initialState.data.rawBody = rawBody;
 
   if (component.getSeoState) {
     seoState = component.getSeoState(initialState.data);
@@ -90,11 +92,12 @@ const isWithoutState = query => {
   return query.withoutState === '';
 };
 
-const renderComponent = async (component, context, predefinedInitialState = null) => {
+const renderComponent = async (component, context, predefinedInitialState = null, rawBody = {}) => {
   const { initialState, seoState, subComponentFiles, responseOptions } = await getStates(
     component.object,
     context,
-    predefinedInitialState
+    predefinedInitialState,
+    rawBody
   );
 
   const { links, scripts, activeComponent } = await createBaseRenderHtmlProps(

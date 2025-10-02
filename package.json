@@ -1,6 +1,6 @@
 {
-  "name": "piramitejs",
-  "version": "1.0.7",
+  "name": "@getir/piramitejs",
+  "version": "1.0.1",
   "main": "src/index.js",
   "author": "",
   "bin": {
@@ -11,7 +11,8 @@
     "npm": ">=10.8.2"
   },
   "publishConfig": {
-    "access": "public"
+    "registry": "https://registry.npmjs.org/",
+    "access": "restricted"
   },
   "dependencies": {
     "@babel/core": "7.16.10",

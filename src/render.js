@@ -55,7 +55,6 @@ export default async (req, res) => {
       url: xss(req.url)
         .replace(componentPath, '/')
         .replace('//', '/'),
-      rawBody,
       userAgent: Buffer.from(req.headers['user-agent'], 'utf-8').toString('base64'),
       isWithoutState: isWithoutStateValue
     };
@@ -65,7 +64,7 @@ export default async (req, res) => {
     let renderResponse = null;
 
     try {
-      renderResponse = await renderComponent(component, context);
+      renderResponse = await renderComponent(component, context, null, rawBody);
     } catch (exception) {
       logger.exception(exception);
       return res.status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR).json({
