@@ -13,7 +13,7 @@ export default (body, title = null) => {
         <title>Preview${additionalTitle}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script>window.HBUS_LAZY = true;</script>
-        <script src="${appConfig.piramiteCommonUrl}"></script>
+        ${appConfig.piramiteCommonUrl ? `<script src="${appConfig.piramiteCommonUrl}"></script>` : ''}
         ${cr(
           appConfig.showPreviewFrame,
           `<style>

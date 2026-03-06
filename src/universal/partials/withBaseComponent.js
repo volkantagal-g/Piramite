@@ -2,6 +2,7 @@ import React from 'react';
 import { hydrateRoot } from 'react-dom/client';
 
 import ClientApp from '../components/ClientApp';
+import ErrorBoundary from '../components/ErrorBoundary';
 import { WINDOW_GLOBAL_PARAMS } from '../utils/constants';
 import { createComponentName } from '../utils/helper';
 import piramiteConfig from '../../../piramite.config';
@@ -63,9 +64,11 @@ function HydratedClientApp({ PageComponent, staticProps, initialState, history, 
     }
   }, [componentEl]);
   return (
-    <ClientApp>
-      <PageComponent {...staticProps} initialState={initialState} history={history} />
-    </ClientApp>
+    <ErrorBoundary>
+      <ClientApp>
+        <PageComponent {...staticProps} initialState={initialState} history={history} />
+      </ClientApp>
+    </ErrorBoundary>
   );
 }
 
