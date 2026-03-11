@@ -33,5 +33,9 @@ yarn.lock
 demo
 piramite.config.js
 
+# Environment variables (local overrides)
+.env.local
+.env.*.local
+
 # NPM configuration
 .npmrc

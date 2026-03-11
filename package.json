@@ -1,6 +1,6 @@
 {
   "name": "@getir/piramitejs",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "src/index.js",
   "author": "",
   "bin": {
@@ -46,6 +46,7 @@
     "core-js": "3.20.3",
     "css-loader": "6.5.1",
     "css-minimizer-webpack-plugin": "3.4.1",
+    "dotenv": "^17.3.1",
     "eev": "0.1.5",
     "esbuild-loader": "2.19.0",
     "eslint": "6.1.0",
@@ -81,7 +82,7 @@
     "regenerator-runtime": "^0.13.9",
     "rimraf": "3.0.2",
     "sass": "^1.82.0",
-    "sass-loader": "^16.0.4",
+    "sass-loader": "^13.3.3",
     "serve-static": "1.14.1",
     "source-map-support": "0.5.21",
     "string-replace-loader": "3.1.0",

@@ -286,7 +286,13 @@ const clientConfig = merge(commonConfig, piramiteClientConfig, {
       "process.env": {},
       "process.env.BROWSER": true,
       __DEV__: isDebug,
-      GO_PIPELINE_LABEL: JSON.stringify(GO_PIPELINE_LABEL)
+      GO_PIPELINE_LABEL: JSON.stringify(GO_PIPELINE_LABEL),
+      ...Object.keys(process.env)
+        .filter(key => key.startsWith('PIRAMITE_PUBLIC_'))
+        .reduce((acc, key) => {
+          acc[`process.env.${key}`] = JSON.stringify(process.env[key]);
+          return acc;
+        }, {})
     }),
 
     new CopyWebpackPlugin([
