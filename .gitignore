@@ -33,6 +33,9 @@ yarn.lock
 demo
 piramite.config.js
 
+# Auto-generated API routes manifest
+apiRoutes.manifest.js
+
 # Environment variables (local overrides)
 .env.local
 .env.*.local

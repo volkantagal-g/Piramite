@@ -46,6 +46,12 @@ function replaceString() {
     flags: 'g'
   });
 
+  data.push({
+    search: '__V_API_ROUTES__',
+    replace: normalizeUrl(`${piramiteConfig.appConfigFile.output.path}/apiRoutes.manifest.js`),
+    flags: 'g'
+  });
+
   return data;
 }
 

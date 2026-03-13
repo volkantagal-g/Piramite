@@ -55,7 +55,12 @@ const serverConfig = merge(commonConfig, piramiteServerConfig, {
       {
         test: /\.(js|jsx|mjs)$/,
         loader: 'esbuild-loader',
-        include: [path.resolve(__dirname, 'src'), piramiteConfig.inputFolder],
+        include: [
+          path.resolve(__dirname, 'src'),
+          piramiteConfig.inputFolder,
+          piramiteConfig.routing && piramiteConfig.routing.api ? piramiteConfig.routing.api : null,
+          piramiteConfig.appConfigFile && piramiteConfig.appConfigFile.output && piramiteConfig.appConfigFile.output.path,
+        ].filter(Boolean),
         options: {
           loader: 'jsx',
           target: 'es2015',
@@ -64,7 +69,11 @@ const serverConfig = merge(commonConfig, piramiteServerConfig, {
       {
         test: /\.tsx?$/,
         loader: "esbuild-loader",
-        include: [path.resolve(__dirname, "src"), piramiteConfig.inputFolder],
+        include: [
+          path.resolve(__dirname, "src"),
+          piramiteConfig.inputFolder,
+          piramiteConfig.routing && piramiteConfig.routing.api ? piramiteConfig.routing.api : null,
+        ].filter(Boolean),
         options: {
           loader: "tsx",
           target: "es2015"

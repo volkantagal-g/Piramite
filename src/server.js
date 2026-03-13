@@ -15,7 +15,7 @@ import xss from 'xss';
 
 import Welcome from './universal/partials/Welcome';
 import render from './render';
-import registerControllers from './api/controllers';
+import registerControllers, { createApiMiddleware } from './api/controllers';
 import renderMultiple from './renderMultiple';
 
 import { createCacheManagerInstance } from './universal/core/cache/cacheUtils';
@@ -231,6 +231,7 @@ export default () => {
     cookieParser(),
     utils,
     handleUrls,
+    createApiMiddleware(),
     render
   ]);
 };
