@@ -25,6 +25,22 @@ import { HTTP_STATUS_CODES } from './universal/utils/constants';
 
 import piramiteConfig from '../piramite.config';
 
+// Helmet 7 defaults include strict CSP; disable unless piramiteConfig.helmet opts in.
+function createHelmetMiddleware() {
+  if (piramiteConfig.helmet === false) {
+    return null;
+  }
+
+  const options =
+    typeof piramiteConfig.helmet === 'object' && piramiteConfig.helmet !== null
+      ? { contentSecurityPolicy: false, ...piramiteConfig.helmet }
+      : { contentSecurityPolicy: false };
+
+  return helmet(options);
+}
+
+const helmetMiddleware = createHelmetMiddleware();
+
 const { bundleAnalyzerStaticEnabled } = require('__APP_CONFIG__');
 
 const enablePrometheus = piramiteConfig.monitoring.prometheus;
@@ -201,7 +217,9 @@ if (cluster.isWorker) {
   });
   hiddie.use(compression());
   hiddie.use(locals);
-  hiddie.use(helmet());
+  if (helmetMiddleware) {
+    hiddie.use(helmetMiddleware);
+  }
   hiddie.use(bodyParser);
   hiddie.use(cors);
   hiddie.use('/', serveStatic(`${piramiteConfig.distFolder}/public`));
@@ -230,7 +248,7 @@ export default () =>
   compose([
     compression(),
     locals,
-    helmet(),
+    ...(helmetMiddleware ? [helmetMiddleware] : []),
     bodyParser,
     serveStatic(`${piramiteConfig.distFolder}/public`),
     cookieParser(),

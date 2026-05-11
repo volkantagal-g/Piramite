@@ -13,7 +13,7 @@ const { EsbuildPlugin } = require("esbuild-loader");
 
 require("intersection-observer");
 
-const { createComponentName } = require("./src/universal/utils/helper.js");
+const createComponentName = (routePath) => routePath.split("/").join("");
 const packageJson = require(path.resolve(process.cwd(), "package.json"));
 
 const isBuildingForCDN = process.argv.includes("--for-cdn");
