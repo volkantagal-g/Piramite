@@ -43,9 +43,13 @@ async function start() {
     })
   );
 
-  http.createServer(hiddie.run).listen(piramiteConfig.port);
+  let isStarted = false;
 
   compiler.hooks.done.tap('start.js__port-reporting', () => {
+    if (!isStarted) {
+      isStarted = true;
+      http.createServer(hiddie.run).listen(piramiteConfig.port);
+    }
     setTimeout(() => {
       console.log(`Piramite ready on ${piramiteConfig.port}`);
     }, PORT_REPORT_TIMEOUT);
