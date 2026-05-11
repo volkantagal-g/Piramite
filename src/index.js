@@ -3,5 +3,5 @@ import { SERVICES } from './universal/utils/constants';
 
 export default {
   withBaseComponent,
-  SERVICES
+  SERVICES,
 };

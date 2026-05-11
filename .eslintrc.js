@@ -1,6 +1,11 @@
 module.exports = {
-  parser: 'babel-eslint',
-  extends: ['airbnb', 'prettier'],
+  parser: '@babel/eslint-parser',
+  extends: ['airbnb', 'airbnb/hooks', 'prettier'],
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
   globals: {
     hwindow: true,
     document: true,
@@ -10,6 +15,7 @@ module.exports = {
     jest: true,
   },
   parserOptions: {
+    requireConfigFile: true,
     ecmaFeatures: {
       jsx: true
     },
@@ -18,6 +24,18 @@ module.exports = {
   },
   plugins: ['react', 'prettier'],
   rules: {
+    'react/react-in-jsx-scope': 'off',
+    'react/jsx-uses-react': 'off',
+    'react/destructuring-assignment': 'off',
+    'prefer-regex-literals': 'off',
+    'no-restricted-exports': 'off',
+    'react/no-deprecated': 'warn',
+    'no-plusplus': 'off',
+    'no-restricted-syntax': 'off',
+    'no-unused-vars': [
+      'error',
+      { varsIgnorePattern: '^React$', argsIgnorePattern: '^_', ignoreRestSiblings: true },
+    ],
     'prettier/prettier': ['error'],
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'react/jsx-props-no-spreading': 'off',

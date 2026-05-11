@@ -1,7 +1,8 @@
+import { QUERY_PARAMS } from './constants';
+
 const appConfig = require('__APP_CONFIG__');
 const assets = require('__ASSETS_FILE_PATH__');
 const piramiteConfig = require('../../../piramite.config');
-import { QUERY_PARAMS } from './constants';
 
 const assetsBaseUrl = !appConfig.mediaUrl ? appConfig.baseUrl : '';
 const assetsPrefix = appConfig.mediaUrl.length ? appConfig.mediaUrl : appConfig.baseUrl;
@@ -11,28 +12,25 @@ const path = require('path');
 
 const cssContentCache = {};
 
-const cleanAssetsPrefixFromAssetURI = assetURI => {
-  return assetURI.replace(assetsPrefix, '');
-};
+const cleanAssetsPrefixFromAssetURI = (assetURI) => assetURI.replace(assetsPrefix, '');
 
-const readAsset = name => {
-  return fs.readFileSync(
+const readAsset = (name) =>
+  fs.readFileSync(
     path.resolve(
       process.cwd(),
-      `${piramiteConfig.publicDistFolder}/${cleanAssetsPrefixFromAssetURI(name)}`
+      `${piramiteConfig.publicDistFolder}/${cleanAssetsPrefixFromAssetURI(name)}`,
     ),
-    'utf8'
+    'utf8',
   );
-};
 
 if (process.env.NODE_ENV === 'production') {
-  Object.keys(assets).forEach(name => {
+  Object.keys(assets).forEach((name) => {
     if (!assets[name].css) {
       return;
     }
 
     if (Array.isArray(assets[name].css)) {
-      assets[name].css.map(cssItem => {
+      assets[name].css.map((cssItem) => {
         cssContentCache[cssItem] = readAsset(cssItem);
       });
     } else {
@@ -46,12 +44,12 @@ const getScripts = (name, subComponentFiles) => {
   const scripts = [
     {
       src: `${assetsBaseUrl}${assets.client.js}`,
-      isAsync: false
+      isAsync: false,
     },
     {
       src: `${assetsBaseUrl}${assets[name].js}`,
-      isAsync: false
-    }
+      isAsync: false,
+    },
   ];
   const mergedScripts =
     subComponentFilesScripts && subComponentFilesScripts.length > 0
@@ -75,7 +73,7 @@ const getStyles = async (name, subComponentFiles, predefinedInitialState) => {
         !piramiteConfig.criticalCssDisabled &&
         withCriticalCss
           ? cssContentCache[name]
-          : null
+          : null,
     });
   }
 
@@ -88,7 +86,7 @@ const getStyles = async (name, subComponentFiles, predefinedInitialState) => {
         !piramiteConfig.criticalCssDisabled &&
         withCriticalCss
           ? cssContentCache.client
-          : null
+          : null,
     });
   }
 
@@ -100,22 +98,20 @@ const getStyles = async (name, subComponentFiles, predefinedInitialState) => {
   return mergedLinks;
 };
 
-const getActiveComponent = name => {
+const getActiveComponent = (name) => {
   const path = `/${name}`;
 
   return {
     resultPath: path,
     componentName: name,
-    url: path
+    url: path,
   };
 };
 
-const createBaseRenderHtmlProps = async (name, subComponentFiles, predefinedInitialState) => {
-  return {
-    scripts: getScripts(name, subComponentFiles),
-    links: await getStyles(name, subComponentFiles, predefinedInitialState),
-    activeComponent: getActiveComponent(name)
-  };
-};
+const createBaseRenderHtmlProps = async (name, subComponentFiles, predefinedInitialState) => ({
+  scripts: getScripts(name, subComponentFiles),
+  links: await getStyles(name, subComponentFiles, predefinedInitialState),
+  activeComponent: getActiveComponent(name),
+});
 
 export default createBaseRenderHtmlProps;

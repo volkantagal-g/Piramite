@@ -45,10 +45,12 @@ async function main() {
   const port = getPiramitePort();
   console.log(`Piramite port: ${port}`);
 
-  // Piramite'yi başlat
-  const piramite = spawn('piramite', ['--config', './demo/piramite-app.config.js', '--dev'], {
+  const projectRoot = path.resolve(__dirname, '..');
+  const piramiteBin = path.join(projectRoot, 'bin', 'piramite.js');
+
+  const piramite = spawn(process.execPath, [piramiteBin, '--config', './demo/piramite-app.config.js', '--dev'], {
     stdio: 'inherit',
-    shell: true
+    cwd: projectRoot,
   });
 
   // 5 saniye bekle ve tarayıcıyı aç

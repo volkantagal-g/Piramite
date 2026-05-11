@@ -2,6 +2,8 @@
 // https://facebook.github.io/jest/docs/en/configuration.html
 module.exports = {
   verbose: true,
+  testEnvironment: 'jsdom',
+  passWithNoTests: true,
   automock: false,
   bail: true,
   collectCoverageFrom: [

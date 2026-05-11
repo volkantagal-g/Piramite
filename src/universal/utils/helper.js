@@ -1,13 +1,11 @@
 // eslint-disable-next-line import/prefer-default-export
-export const removeQueryStringFromUrl = url => {
+export const removeQueryStringFromUrl = (url) => {
   const partials = url.split('?');
 
   return partials[0];
 };
 
-export const createComponentName = routePath => {
-  return routePath.split('/').join('');
-};
+export const createComponentName = (routePath) => routePath.split('/').join('');
 
 export function guid() {
   return `${s4()}${s4()}-${s4()}-4${s4().substr(0, 3)}-${s4()}-${s4()}${s4()}${s4()}`.toLowerCase();

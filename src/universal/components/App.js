@@ -11,13 +11,13 @@ class App extends PureComponent {
     super(props);
 
     this.state = {
-      isHydratingCompleted: false
+      isHydratingCompleted: false,
     };
   }
 
   componentDidMount() {
     this.setState({
-      isHydratingCompleted: true
+      isHydratingCompleted: true,
     });
   }
 
@@ -37,7 +37,7 @@ class App extends PureComponent {
     const query = extractQueryParamsFromLocation(location);
     return {
       query,
-      initialState
+      initialState,
     };
   }
 
@@ -55,12 +55,12 @@ class App extends PureComponent {
 
 App.propTypes = {
   initialState: PropTypes.shape(),
-  location: PropTypes.shape()
+  location: PropTypes.shape(),
 };
 
 App.defaultProps = {
   initialState: null,
-  location: null
+  location: null,
 };
 
 export default App;

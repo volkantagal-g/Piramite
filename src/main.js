@@ -6,12 +6,12 @@ import Hiddie from 'hiddie';
 import http from 'http';
 import piramiteConfig from '../piramite.config';
 import prom from 'prom-client';
-import {HTTP_STATUS_CODES} from './universal/utils/constants';
+import { HTTP_STATUS_CODES } from './universal/utils/constants';
 
 const enablePrometheus = piramiteConfig.monitoring.prometheus;
 
 function triggerMessageListener(worker) {
-  worker.on('message', function (message) {
+  worker.on('message', (message) => {
     if (message?.options?.forwardAllWorkers) {
       sendMessageToAllWorkers(message);
     }
@@ -19,7 +19,7 @@ function triggerMessageListener(worker) {
 }
 
 function sendMessageToAllWorkers(message) {
-  Object.keys(cluster.workers).forEach(function (key) {
+  Object.keys(cluster.workers).forEach((key) => {
     const worker = cluster.workers[key];
     worker.send({
       msg: message.msg,
@@ -36,7 +36,7 @@ if (cluster.isMaster) {
     cluster.fork();
   }
 
-  cluster.on('exit', worker => {
+  cluster.on('exit', (worker) => {
     logger.error(`Worker ${worker.id} died`);
     cluster.fork();
   });
@@ -52,14 +52,14 @@ if (cluster.isMaster) {
         return res.end(await aggregatorRegistry.clusterMetrics());
       }
       res.statusCode = HTTP_STATUS_CODES.NOT_FOUND;
-      res.end(JSON.stringify({message: 'not found'}));
+      res.end(JSON.stringify({ message: 'not found' }));
     });
 
     http.createServer(hiddie.run).listen(metricsPort, () => {
       logger.info(
         `Piramite ready on ${piramiteConfig.port} with ${
           os.cpus().length
-        } core, also /metrics ready on ${metricsPort}`
+        } core, also /metrics ready on ${metricsPort}`,
       );
     });
   }

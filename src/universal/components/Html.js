@@ -29,7 +29,7 @@ function Html({
   initialState,
   fullWidth,
   isMobileFragment,
-  context
+  context,
 }) {
   return `
     <div>
@@ -39,8 +39,8 @@ function Html({
         id='${componentName.replace(/['"']+/g, '')}_${initialState.id}'
         style="pointer-events: none;"
         class="${piramiteConfig.prefix}-piramite-body piramite-body ${
-    isMobileFragment ? 'mobile' : ''
-  }${fullWidth ? 'full' : ''} ${componentClassName(componentName, context)}">
+          isMobileFragment ? 'mobile' : ''
+        }${fullWidth ? 'full' : ''} ${componentClassName(componentName, context)}">
         ${children}
       </div>
       <div>REPLACE_WITH_LINKS</div>
@@ -48,11 +48,11 @@ function Html({
 
       ${cr(
         process.env.NODE_ENV !== 'production',
-        `<meta httpEquiv="X-UA-Compatible" content="IE=edge" />`
+        `<meta httpEquiv="X-UA-Compatible" content="IE=edge" />`,
       )}
       ${cr(
         process.env.NODE_ENV !== 'production',
-        `<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />`
+        `<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />`,
       )}
     </div>`;
 }

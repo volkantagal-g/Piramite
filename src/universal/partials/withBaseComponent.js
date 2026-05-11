@@ -11,7 +11,7 @@ const getStaticProps = () => {
   const staticProps = {};
 
   if (piramiteConfig.staticProps) {
-    piramiteConfig.staticProps.map(property => {
+    piramiteConfig.staticProps.map((property) => {
       staticProps[property.name] = property.value;
     });
   }
@@ -28,7 +28,7 @@ const withBaseComponent = (PageComponent, pathName) => {
     const history = window[WINDOW_GLOBAL_PARAMS.HISTORY];
     const staticProps = getStaticProps();
 
-    Object.keys(fragments).forEach(id => {
+    Object.keys(fragments).forEach((id) => {
       const componentEl = document.getElementById(`${componentName}_${id}`);
       const isHydrated = componentEl && !!componentEl.getAttribute('piramite-hydrated');
 
@@ -44,12 +44,12 @@ const withBaseComponent = (PageComponent, pathName) => {
           initialState={initialState}
           history={history}
           componentEl={componentEl}
-        />
+        />,
       );
     });
   }
 
-  return props => {
+  return function (props) {
     return <PageComponent {...props} />;
   };
 };

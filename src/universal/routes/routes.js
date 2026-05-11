@@ -5,8 +5,8 @@ import routesWithComponents from '../core/route/routesWithComponents';
 
 import HbRoute from '../components/route/HbRoute';
 
-export const renderRoutes = routingProps =>
-  Object.entries(routesWithComponents).map(entity => (
+export const renderRoutes = (routingProps) =>
+  Object.entries(routesWithComponents).map((entity) => (
     <HbRoute
       routingProps={routingProps}
       key={entity[0]}

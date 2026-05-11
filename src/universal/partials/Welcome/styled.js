@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const STATUS_COLOR = {
   live: '#8dc63f',
-  dev: '#FF6000'
+  dev: '#FF6000',
 };
 export const List = styled.ul`
   list-style: none;

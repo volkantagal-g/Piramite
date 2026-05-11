@@ -9,8 +9,10 @@ export default class Renderer {
     this.initialState = null;
     this.winnerMap = null;
 
-    if (this.isPredefinedInitialStateSupported() &&
-      (process.env.BROWSER || (!process.env.BROWSER && !this.context.isWithoutState))) {
+    if (
+      this.isPredefinedInitialStateSupported() &&
+      (process.env.BROWSER || (!process.env.BROWSER && !this.context.isWithoutState))
+    ) {
       this.servicesMap = this.getServicesMap();
       this.winnerMap = {};
     }
@@ -18,7 +20,7 @@ export default class Renderer {
 
   setInitialState(prepareInitialStateArgs) {
     this.initialState = {
-      data: this.component.object.prepareInitialState(...prepareInitialStateArgs)
+      data: this.component.object.prepareInitialState(...prepareInitialStateArgs),
     };
   }
 
@@ -28,7 +30,7 @@ export default class Renderer {
 
   getServicesMap() {
     const services = this.component.object.services.map(
-      serviceName => ServerApiManagerCache[serviceName]
+      (serviceName) => ServerApiManagerCache[serviceName],
     );
 
     const params = [...services, this.context];
@@ -36,15 +38,15 @@ export default class Renderer {
   }
 
   render() {
-    return new Promise(resolve => {
-      renderComponent(this.component, this.context, this.initialState).then(response => {
+    return new Promise((resolve) => {
+      renderComponent(this.component, this.context, this.initialState).then((response) => {
         const { output, links, scripts, activeComponent, seoState } = response;
         const html = renderLinksAndScripts(output, '', '');
 
         resolve({
           key: this.component.name,
           value: { html, scripts, style: links, activeComponent, seoState },
-          id: this.component.id
+          id: this.component.id,
         });
       });
     });

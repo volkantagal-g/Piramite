@@ -60,7 +60,7 @@ export default (body, title = null) => {
               background-color: #121212;
               border-radius: 100%;
             }
-          </style>`
+          </style>`,
         )}
       </head>
       <body>

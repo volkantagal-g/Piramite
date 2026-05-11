@@ -11,35 +11,29 @@ function generateInitialState(initialState, componentName) {
       '${initialState.id}': {
         'STATE': ${JSON.stringify(initialState).replace(
           new RegExp('</script>', 'g'),
-          '<\\/script>'
+          '<\\/script>',
         )}
       }
     }`;
 }
 
-const generateScripts = scripts => {
-  return scripts
-    .map(script => {
-      return `<script src="${script.src}" ${script.isAsync ? 'async' : ''}></script>`;
-    })
+const generateScripts = (scripts) =>
+  scripts
+    .map((script) => `<script src="${script.src}" ${script.isAsync ? 'async' : ''}></script>`)
     .join('');
-};
 
-const generateLinks = links => {
-  return links.map(link => `<link rel="${link.rel}" href="${link.href}" />`).join('');
-};
+const generateLinks = (links) =>
+  links.map((link) => `<link rel="${link.rel}" href="${link.href}" />`).join('');
 
 export { generateScripts, generateLinks };
 
-export default (resultPath, componentName, initialState) => {
-  return `
+export default (resultPath, componentName, initialState) => `
     <div>
       <script type="text/javascript">${generateInitialState(initialState, componentName)}</script>
       <div id='${componentName.replace(/['"']+/g, '')}_${
-    initialState.id
-  }' style="pointer-events: none;"></div>
+        initialState.id
+      }' style="pointer-events: none;"></div>
       <div>REPLACE_WITH_LINKS</div>
       <div>REPLACE_WITH_SCRIPTS</div>
     </div>
 `;
-};

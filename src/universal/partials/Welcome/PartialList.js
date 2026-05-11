@@ -14,16 +14,16 @@ import {
   Link,
   HeaderName,
   NoContentDescription,
-  Description
+  Description,
 } from './styled';
 import partials from './partials';
 
 const sheet = new ServerStyleSheet();
 
-const Welcome = () => {
-  const { live = [], dev = [], page = [] } = structUtils.groupBy(partials, item => item.status);
+function Welcome() {
+  const { live = [], dev = [], page = [] } = structUtils.groupBy(partials, (item) => item.status);
 
-  const renderItem = item => (
+  const renderItem = (item) => (
     <ListItem>
       <Link href={item.previewUrl ? item.previewUrl : `${item.url}?preview`} target="_blank">
         <Name>{item.name}</Name>
@@ -40,7 +40,7 @@ const Welcome = () => {
     <List>
       <HeaderName>Live</HeaderName>
       <Description>This area displays your live projects.</Description>
-      {live.map(item => renderItem(item))}
+      {live.map((item) => renderItem(item))}
       {live.length === 0 && (
         <NoContentDescription>
           <span>❌</span> No live projects found.
@@ -48,7 +48,7 @@ const Welcome = () => {
       )}
       <HeaderName>Pages</HeaderName>
       <Description>This area displays your pages.</Description>
-      {page.map(item => renderItem(item))}
+      {page.map((item) => renderItem(item))}
       {page.length === 0 && (
         <NoContentDescription>
           <span>❌</span> No pages found.
@@ -56,7 +56,7 @@ const Welcome = () => {
       )}
       <HeaderName>Development</HeaderName>
       <Description>This area displays your development projects.</Description>
-      {dev.map(item => renderItem(item))}
+      {dev.map((item) => renderItem(item))}
       {dev.length === 0 && (
         <NoContentDescription>
           <span>❌</span> No development projects found.
@@ -64,7 +64,7 @@ const Welcome = () => {
       )}
     </List>
   );
-};
+}
 export default ReactDOMServer.renderToString(sheet.collectStyles(<Welcome />));
 const styleTags = sheet.getStyleTags();
 

@@ -20,7 +20,7 @@ const getStates = async (component, context, predefinedInitialState, rawBody = {
   }
 
   if (!predefinedInitialState && component.getInitialState) {
-    const services = component.services.map(serviceName => ServerApiManagerCache[serviceName]);
+    const services = component.services.map((serviceName) => ServerApiManagerCache[serviceName]);
     initialState.data = await component.getInitialState(...[...services, context]);
   }
 
@@ -41,11 +41,10 @@ const getStates = async (component, context, predefinedInitialState, rawBody = {
   return { initialState, seoState, subComponentFiles, responseOptions };
 };
 
-const renderLinksAndScripts = (html, links, scripts) => {
-  return html
+const renderLinksAndScripts = (html, links, scripts) =>
+  html
     .replace('<div>REPLACE_WITH_LINKS</div>', links)
     .replace('<div>REPLACE_WITH_SCRIPTS</div>', scripts);
-};
 
 const renderHtml = (component, initialState, context) => {
   // eslint-disable-next-line no-param-reassign
@@ -61,8 +60,8 @@ const renderHtml = (component, initialState, context) => {
     sheet.collectStyles(
       <StaticRouter location={component.path} context={context}>
         <ConnectedApp initialState={initialStateWithLocation} location={context} />
-      </StaticRouter>
-    )
+      </StaticRouter>,
+    ),
   );
 
   const styleTags = sheet.getStyleTags();
@@ -76,34 +75,28 @@ const renderHtml = (component, initialState, context) => {
     initialState: initialStateWithLocation,
     fullWidth: component.fullWidth,
     isMobileFragment: component.isMobileFragment,
-    context
+    context,
   });
 };
 
-const isWithoutHTML = query => {
-  return query.withoutHTML === '';
-};
+const isWithoutHTML = (query) => query.withoutHTML === '';
 
-const isPreview = query => {
-  return query.preview === '';
-};
+const isPreview = (query) => query.preview === '';
 
-const isWithoutState = query => {
-  return query.withoutState === '';
-};
+const isWithoutState = (query) => query.withoutState === '';
 
 const renderComponent = async (component, context, predefinedInitialState = null, rawBody = {}) => {
   const { initialState, seoState, subComponentFiles, responseOptions } = await getStates(
     component.object,
     context,
     predefinedInitialState,
-    rawBody
+    rawBody,
   );
 
   const { links, scripts, activeComponent } = await createBaseRenderHtmlProps(
     component.name,
     subComponentFiles,
-    context
+    context,
   );
 
   const output = renderHtml(component, initialState, context);
@@ -120,7 +113,7 @@ const renderComponent = async (component, context, predefinedInitialState = null
     fullWidth: component.fullWidth,
     isMobileComponent: component.isMobileComponent,
     isPreviewQuery: component.isPreviewQuery,
-    responseOptions
+    responseOptions,
   };
 };
 
@@ -131,5 +124,5 @@ export {
   isWithoutHTML,
   isPreview,
   isWithoutState,
-  renderComponent
+  renderComponent,
 };

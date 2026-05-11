@@ -5,7 +5,7 @@ import { Route } from 'react-router-dom';
 import { renderMergedProps } from '../../core/route/routeUtils';
 
 class HbRoute extends PureComponent {
-  hbRouteProps = routeProps => {
+  hbRouteProps = (routeProps) => {
     const { component, routingProps } = this.props;
     return renderMergedProps(component, routeProps, routingProps);
   };
@@ -19,12 +19,12 @@ class HbRoute extends PureComponent {
 HbRoute.propTypes = {
   component: PropTypes.func.isRequired,
   routeProps: PropTypes.shape(),
-  routingProps: PropTypes.shape()
+  routingProps: PropTypes.shape(),
 };
 
 HbRoute.defaultProps = {
   routeProps: null,
-  routingProps: null
+  routingProps: null,
 };
 
 export default HbRoute;

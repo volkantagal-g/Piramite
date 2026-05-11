@@ -14,25 +14,35 @@ class ErrorBoundary extends Component {
 
   componentDidCatch(error, errorInfo) {
     // You can also log the error to an error reporting service
-    console.error("Uncaught error:", error, errorInfo);
+    console.error('Uncaught error:', error, errorInfo);
   }
 
   render() {
     if (this.state.hasError) {
       // You can render any custom fallback UI
       return (
-        <div style={{ padding: '20px', textAlign: 'center', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+        <div
+          style={{
+            padding: '20px',
+            textAlign: 'center',
+            fontFamily: 'system-ui, -apple-system, sans-serif',
+          }}
+        >
           <h2 style={{ marginBottom: '10px' }}>Bir şeyler ters gitti.</h2>
-          <p style={{ marginBottom: '20px', color: '#666' }}>Lütfen sayfayı yenileyin veya daha sonra tekrar deneyin.</p>
+          <p style={{ marginBottom: '20px', color: '#666' }}>
+            Lütfen sayfayı yenileyin veya daha sonra tekrar deneyin.
+          </p>
           {process.env.NODE_ENV === 'development' && this.state.error && (
-            <div style={{ 
-              textAlign: 'left', 
-              background: '#f8f9fa', 
-              padding: '15px', 
-              borderRadius: '6px',
-              overflowX: 'auto',
-              border: '1px solid #e9ecef'
-            }}>
+            <div
+              style={{
+                textAlign: 'left',
+                background: '#f8f9fa',
+                padding: '15px',
+                borderRadius: '6px',
+                overflowX: 'auto',
+                border: '1px solid #e9ecef',
+              }}
+            >
               <p style={{ color: '#dc3545', fontWeight: 'bold', margin: '0 0 10px 0' }}>
                 {this.state.error.toString()}
               </p>
@@ -50,7 +60,7 @@ class ErrorBoundary extends Component {
 }
 
 ErrorBoundary.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
 export default ErrorBoundary;

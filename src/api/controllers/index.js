@@ -32,7 +32,7 @@ function handleApiRoute(req, res, next, handler) {
     methodHandler(req, res, next);
   } else {
     res.statusCode = 405;
-    res.setHeader('Allow', HTTP_METHODS.filter(m => mod[m]).join(', '));
+    res.setHeader('Allow', HTTP_METHODS.filter((m) => mod[m]).join(', '));
     res.end(JSON.stringify({ error: 'Method Not Allowed' }));
   }
 }

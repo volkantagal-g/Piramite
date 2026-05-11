@@ -6,7 +6,7 @@ import https from 'https';
 
 const BASE_HTTP_AGENT_CONFIG = {
   keepAlive: true,
-  rejectUnauthorized: false
+  rejectUnauthorized: false,
 };
 
 export default (config, timeout) => {
@@ -14,7 +14,7 @@ export default (config, timeout) => {
     timeout,
     baseURL: config.serverUrl,
     httpAgent: new http.Agent(BASE_HTTP_AGENT_CONFIG),
-    httpsAgent: new https.Agent(BASE_HTTP_AGENT_CONFIG)
+    httpsAgent: new https.Agent(BASE_HTTP_AGENT_CONFIG),
   });
 
   return createApiClient(apiManager);

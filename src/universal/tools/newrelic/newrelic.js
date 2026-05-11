@@ -8,7 +8,7 @@ if (newrelicEnabled) {
   newrelic = require('newrelic');
 }
 
-const isJsonValid = str => {
+const isJsonValid = (str) => {
   try {
     JSON.parse(str);
   } catch (e) {
@@ -17,7 +17,7 @@ const isJsonValid = str => {
   return true;
 };
 
-export const addCustomAttrsToNewrelic = message => {
+export const addCustomAttrsToNewrelic = (message) => {
   if (!newrelic) return;
   const isValidJson = isJsonValid(message);
   if (!isValidJson) return;

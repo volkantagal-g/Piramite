@@ -1,8 +1,7 @@
 import PartialList, { styleTags } from './PartialList';
 import Header, { styleTags as headerStyleTags } from './Header/Header';
 
-export default () => {
-  return `
+export default () => `
     <!doctype html>
       <head>
         <title>Welcome</title>
@@ -36,4 +35,3 @@ export default () => {
       </body>
     </html>
   `;
-};

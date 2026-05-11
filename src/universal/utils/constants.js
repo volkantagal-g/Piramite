@@ -1,7 +1,7 @@
 const appConfig = require('__APP_CONFIG__');
 
 const WINDOW_GLOBAL_PARAMS = {
-  HISTORY: 'storefront.pwa.mobile.global.history'
+  HISTORY: 'storefront.pwa.mobile.global.history',
 };
 
 const HTTP_STATUS_CODES = {
@@ -11,7 +11,7 @@ const HTTP_STATUS_CODES = {
   MOVED_PERMANENTLY: 301,
   FOUND: 302,
   NOT_FOUND: 404,
-  INTERNAL_SERVER_ERROR: 500
+  INTERNAL_SERVER_ERROR: 500,
 };
 
 const JSON_CONTENT_TYPE = 'application/json';
@@ -22,11 +22,11 @@ const SERVICES = Object.freeze(
     // eslint-disable-next-line no-param-reassign
     obj[val] = Symbol(val);
     return obj;
-  }, {})
+  }, {}),
 );
 
 const QUERY_PARAMS = {
-  WITH_CRITICAL_STYLES: 'withCriticalCss'
+  WITH_CRITICAL_STYLES: 'withCriticalCss',
 };
 
 export {
@@ -36,5 +36,5 @@ export {
   CONTENT_TYPE_HEADER,
   REQUEST_TYPES_WITH_BODY,
   SERVICES,
-  QUERY_PARAMS
+  QUERY_PARAMS,
 };

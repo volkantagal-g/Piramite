@@ -14,13 +14,13 @@ export default class Request {
     } else {
       promise = this.client
         .request(this.payload)
-        .then(response => {
+        .then((response) => {
           if (this.response?.onSuccess) {
             return this.response.onSuccess(response);
           }
           return response;
         })
-        .catch(error => {
+        .catch((error) => {
           if (this.response?.onError) {
             return this.response.onError(error);
           }

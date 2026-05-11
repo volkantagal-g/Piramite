@@ -8,6 +8,6 @@ export default {
     name: `fragment_request_duration_ms${suffix}`,
     help: 'Duration of fragment requests in ms',
     labelNames: ['name', 'without_html'],
-    buckets: [5, 25, 50, 75, 100]
-  })
+    buckets: [5, 25, 50, 75, 100],
+  }),
 };

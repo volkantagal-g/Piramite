@@ -5,7 +5,7 @@ import { ServerStyleSheet } from 'styled-components';
 
 const sheet = new ServerStyleSheet();
 
-const Header = () => {
+function Header() {
   return (
     <HeaderContainer>
       <PiramiteLogo>
@@ -14,7 +14,7 @@ const Header = () => {
       </PiramiteLogo>
     </HeaderContainer>
   );
-};
+}
 
 export default ReactDOMServer.renderToString(sheet.collectStyles(<Header />));
 const styleTags = sheet.getStyleTags();

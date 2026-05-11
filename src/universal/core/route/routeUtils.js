@@ -5,9 +5,7 @@ import { matchPath } from 'react-router';
 import { removeQueryStringFromUrl } from '../../utils/helper';
 import { ROUTE_PATH_ARRAY, ROUTE_CONFIGS } from './routeConstants';
 
-const extractQueryParamsFromLocation = location => {
-  return queryString.parse(location.search);
-};
+const extractQueryParamsFromLocation = (location) => queryString.parse(location.search);
 
 const matchUrlForRoutePath = (urlPath, routePath) => {
   let result = null;
@@ -15,13 +13,13 @@ const matchUrlForRoutePath = (urlPath, routePath) => {
   const rawMatchPathResult = matchPath(removeQueryStringFromUrl(urlPath), {
     path: routePath,
     routePath,
-    ...routeConfig
+    ...routeConfig,
   });
 
   if (rawMatchPathResult) {
     result = {
       ...rawMatchPathResult,
-      ...routeConfig
+      ...routeConfig,
     };
   }
 
@@ -44,14 +42,12 @@ const matchUrlInRouteArray = (path, routeArray) => {
   return result;
 };
 
-const matchUrlInRouteConfigs = path => {
-  return matchUrlInRouteArray(path, ROUTE_PATH_ARRAY);
-};
+const matchUrlInRouteConfigs = (path) => matchUrlInRouteArray(path, ROUTE_PATH_ARRAY);
 
 const renderMergedProps = (component, ownRouteProps, routingProps) => {
   const finalProps = {
     ...ownRouteProps,
-    ...routingProps
+    ...routingProps,
   };
   return React.createElement(component, finalProps);
 };
@@ -61,5 +57,5 @@ export {
   matchUrlInRouteConfigs,
   matchUrlInRouteArray,
   matchUrlForRoutePath,
-  renderMergedProps
+  renderMergedProps,
 };

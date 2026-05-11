@@ -14,9 +14,9 @@ function createApiClient(apiManager) {
       .reduce(
         (params, key) => ({
           ...params,
-          [key]: nonSortedParams[key]
+          [key]: nonSortedParams[key],
         }),
-        {}
+        {},
       );
   }
 
@@ -48,22 +48,22 @@ function createApiClient(apiManager) {
       if (cacheResponse && !cacheResponse.isExpired) {
         // console.log('Came from cache', cacheSettings.cacheKey);
         request = getRequest(method, url, paramsArgument, configArgument, {
-          cacheResponse: cacheResponse.cacheValue
+          cacheResponse: cacheResponse.cacheValue,
         });
       } else {
         // console.log('Not exist cache, request sent', cacheSettings.cacheKey);
         request = getRequest(method, url, paramsArgument, configArgument, {
-          onSuccess: response => {
+          onSuccess: (response) => {
             cacheManager.put(cacheSettings, response);
             return response;
           },
-          onError: error => {
+          onError: (error) => {
             if (cacheResponse) {
               // console.log('Came from cache - IN ERROR BLOCK', cacheSettings.cacheKey);
               return Promise.resolve(cacheResponse.cacheValue);
             }
             return error;
-          }
+          },
         });
       }
     } else {
@@ -97,7 +97,7 @@ function createApiClient(apiManager) {
 
     options(url, config, cacheSettings) {
       return makeRequest('options', url, config, null, cacheSettings);
-    }
+    },
   };
 }
 

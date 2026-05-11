@@ -105,7 +105,9 @@ const serverConfig = merge(commonConfig, piramiteServerConfig, {
           },
           {
             loader: 'postcss-loader',
-            options: postCssConfig
+            options: {
+              postcssOptions: postCssConfig,
+            },
           },
           {
             loader: 'sass-loader',

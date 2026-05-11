@@ -24,7 +24,7 @@ import { HTTP_STATUS_CODES } from './universal/utils/constants';
 
 import piramiteConfig from '../piramite.config';
 
-const {bundleAnalyzerStaticEnabled} = require('__APP_CONFIG__');
+const { bundleAnalyzerStaticEnabled } = require('__APP_CONFIG__');
 
 const enablePrometheus = piramiteConfig.monitoring.prometheus;
 let Prometheus;
@@ -41,20 +41,20 @@ process.on('unhandledRejection', (reason, p) => {
   process.exit(1);
 });
 
-process.on('message', message => {
+process.on('message', (message) => {
   handleProcessMessage(message);
 });
 
 const fragments = [];
 
-Object.keys(fragmentManifest).forEach(index => {
+Object.keys(fragmentManifest).forEach((index) => {
   const fragmentUrl = fragmentManifest[index].path;
   const arr = fragmentUrl.split(path.sep);
   const name = arr[arr.length - 1];
   fragments.push(name);
 });
 
-const handleProcessMessage = message => {
+const handleProcessMessage = (message) => {
   if (message?.msg?.action === 'deleteallcache') {
     createCacheManagerInstance().removeAll();
   } else if (message?.msg?.action === 'deletecache') {
@@ -77,11 +77,11 @@ const handleUrls = async (req, res, next) => {
   } else if (req.url === '/deleteallcache' && req.method === 'GET') {
     process.send({
       msg: {
-        action: 'deleteallcache'
+        action: 'deleteallcache',
       },
       options: {
-        forwardAllWorkers: true
-      }
+        forwardAllWorkers: true,
+      },
     });
     res.json({ success: true });
   } else if (req.path === '/deletecache' && req.method === 'GET') {
@@ -89,11 +89,11 @@ const handleUrls = async (req, res, next) => {
       process.send({
         msg: {
           action: 'deletecache',
-          key: req?.query?.key
+          key: req?.query?.key,
         },
         options: {
-          forwardAllWorkers: true
-        }
+          forwardAllWorkers: true,
+        },
       });
       res.json({ success: true });
     } else {
@@ -108,11 +108,11 @@ const handleUrls = async (req, res, next) => {
 const bodyParser = async (req, res, next) => {
   if (req.method === 'POST' || req.method === 'PUT' || req.method === 'PATCH') {
     let body = '';
-    
-    req.on('data', chunk => {
+
+    req.on('data', (chunk) => {
       body += chunk.toString();
     });
-    
+
     req.on('end', () => {
       try {
         if (req.headers['content-type']?.includes('application/json')) {
@@ -133,7 +133,7 @@ const bodyParser = async (req, res, next) => {
 const cors = async (req, res, next) => {
   const { corsWhiteListDomains } = piramiteConfig;
   const { origin } = req.headers;
-  if (origin && corsWhiteListDomains?.map(domain => domain?.includes(origin))) {
+  if (origin && corsWhiteListDomains?.map((domain) => domain?.includes(origin))) {
     res.setHeader('Access-Control-Allow-Origin', origin);
     res.setHeader('Access-Control-Allow-Credentials', 'true');
   } else {
@@ -153,18 +153,18 @@ const cors = async (req, res, next) => {
 };
 
 const utils = async (req, res, next) => {
-  res.json = json => {
+  res.json = (json) => {
     addCustomAttrsToNewrelic(json.message);
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
     res.end(JSON.stringify(json));
   };
 
-  res.html = html => {
+  res.html = (html) => {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.end(html);
   };
 
-  res.status = code => {
+  res.status = (code) => {
     res.statusCode = code;
     return res;
   };
@@ -203,7 +203,7 @@ if (process.env.NODE_ENV === 'production') {
   bundleAnalyzerStaticEnabled &&
     hiddie.use(
       '/bundleAnalyze',
-      serveStatic(`${piramiteConfig.distFolder}/public/project/assets/report.html`)
+      serveStatic(`${piramiteConfig.distFolder}/public/project/assets/report.html`),
     );
   hiddie.use(cookieParser());
   hiddie.use(utils);
@@ -221,8 +221,8 @@ if (process.env.NODE_ENV === 'production') {
   http.createServer(hiddie.run).listen(piramiteConfig.port);
 }
 
-export default () => {
-  return compose([
+export default () =>
+  compose([
     compression(),
     locals,
     helmet(),
@@ -232,6 +232,5 @@ export default () => {
     utils,
     handleUrls,
     createApiMiddleware(),
-    render
+    render,
   ]);
-};

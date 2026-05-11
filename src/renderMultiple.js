@@ -21,7 +21,7 @@ function getRenderer(name, query, cookies, url, path, userAgent) {
       query,
       cookies,
       url: urlWithPath,
-      userAgent
+      userAgent,
     };
 
     if (Component.isExist(componentPath)) {
@@ -35,33 +35,34 @@ function getRenderer(name, query, cookies, url, path, userAgent) {
 }
 
 function iterateServicesMap(servicesMap, callback) {
-  Object.getOwnPropertySymbols(servicesMap).forEach(serviceName => {
+  Object.getOwnPropertySymbols(servicesMap).forEach((serviceName) => {
     const endPoints = servicesMap[serviceName];
 
-    Object.keys(endPoints).forEach(endPointName => {
+    Object.keys(endPoints).forEach((endPointName) => {
       callback(serviceName, endPointName);
     });
   });
 }
 
 function reduceServicesMap(servicesMap, callback, initialValue) {
-  return Object.getOwnPropertySymbols(servicesMap).map(serviceName => {
+  return Object.getOwnPropertySymbols(servicesMap).map((serviceName) => {
     const endPoints = servicesMap[serviceName];
 
-    return Object.keys(endPoints).reduce((obj, endPointName) => {
-      return callback(serviceName, endPointName, obj);
-    }, initialValue);
+    return Object.keys(endPoints).reduce(
+      (obj, endPointName) => callback(serviceName, endPointName, obj),
+      initialValue,
+    );
   });
 }
 
 function getHashes(renderers) {
   return renderers
-    .filter(renderer => renderer.servicesMap)
+    .filter((renderer) => renderer.servicesMap)
     .reduce((hashes, renderer) => {
       iterateServicesMap(renderer.servicesMap, (serviceName, endPointName) => {
         const requests = renderer.servicesMap[serviceName][endPointName];
 
-        requests.forEach(request => {
+        requests.forEach((request) => {
           if (hashes[request.hash]) {
             hashes[request.hash].occurrence += 1;
           } else {
@@ -105,7 +106,7 @@ async function setInitialStates(renderers) {
   const hashes = getHashes(renderers);
 
   const promises = renderers
-    .filter(renderer => renderer.servicesMap)
+    .filter((renderer) => renderer.servicesMap)
     .reduce((promises, renderer) => {
       iterateServicesMap(renderer.servicesMap, (serviceName, endPointName) => {
         const requests = renderer.servicesMap[serviceName][endPointName];
@@ -115,12 +116,12 @@ async function setInitialStates(renderers) {
         putWinnerMap(serviceName, endPointName, renderer.winnerMap, winner);
 
         if (!promises[winner.hash]) {
-          promises[winner.hash] = callback => {
+          promises[winner.hash] = (callback) => {
             winner
               .execute()
-              .then(response => callback(null, response))
-              .catch(exception =>
-                callback(new Error(`${winner.uri} : ${exception.message}`), null)
+              .then((response) => callback(null, response))
+              .catch((exception) =>
+                callback(new Error(`${winner.uri} : ${exception.message}`), null),
               );
           };
         }
@@ -139,7 +140,7 @@ async function setInitialStates(renderers) {
     });
   });
 
-  renderers.forEach(renderer => {
+  renderers.forEach((renderer) => {
     if (renderer.winnerMap) {
       renderer.setInitialState(
         reduceServicesMap(
@@ -149,8 +150,8 @@ async function setInitialStates(renderers) {
             obj[endPointName] = results[request.hash];
             return obj;
           },
-          {}
-        )
+          {},
+        ),
       );
     }
   });
@@ -159,8 +160,8 @@ async function setInitialStates(renderers) {
 }
 
 async function getResponses(renderers) {
-  return (await Promise.all(renderers.map(renderer => renderer.render())))
-    .filter(result => result.value != null)
+  return (await Promise.all(renderers.map((renderer) => renderer.render())))
+    .filter((result) => result.value != null)
     .reduce((obj, item) => {
       const el = obj;
       const name = `${item.key}_${item.id}`;
@@ -173,8 +174,8 @@ async function getResponses(renderers) {
 
 async function getPreview(responses, requestCount) {
   return Preview(
-    [...Object.keys(responses).map(name => responses[name].fullHtml)].join('\n'),
-    `${requestCount} request!`
+    [...Object.keys(responses).map((name) => responses[name].fullHtml)].join('\n'),
+    `${requestCount} request!`,
   );
 }
 
@@ -183,25 +184,25 @@ export default async (req, res) => {
   const renderers = req.params.components
     .split(',')
     .filter((value, index, self) => self.indexOf(value) === index)
-    .map(name =>
+    .map((name) =>
       getRenderer(
         name,
         req.query,
         req.cookies,
         req.url,
         `/${req.params.path || ''}`,
-        req.headers['user-agent']
-      )
+        req.headers['user-agent'],
+      ),
     )
-    .filter(renderer => renderer != null);
+    .filter((renderer) => renderer != null);
 
   if (!renderers.length) {
     return res.status(HTTP_STATUS_CODES.NOT_FOUND).json({
-      message: 'not found'
+      message: 'not found',
     });
   }
 
-  const componentNames = renderers.map(renderer => renderer.component.name);
+  const componentNames = renderers.map((renderer) => renderer.component.name);
 
   let requestCount = null;
 
@@ -210,7 +211,7 @@ export default async (req, res) => {
   } catch (exception) {
     logger.exception(exception);
     return res.status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR).json({
-      message: exception.message
+      message: exception.message,
     });
   }
 

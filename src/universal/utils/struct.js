@@ -2,7 +2,7 @@
 const structUtils = {
   groupBy(list, getFn) {
     const map = {};
-    list.map(item => {
+    list.map((item) => {
       const key = getFn(item);
       const collection = map[key];
       if (!collection) {
@@ -12,7 +12,7 @@ const structUtils = {
       }
     });
     return map;
-  }
+  },
 };
 
 export default structUtils;

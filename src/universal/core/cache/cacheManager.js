@@ -22,7 +22,7 @@ class CacheManager {
     return {
       createdDate,
       cacheValue,
-      isExpired: cacheExpireDate > cacheCreatedDate
+      isExpired: cacheExpireDate > cacheCreatedDate,
     };
   }
 
@@ -31,7 +31,7 @@ class CacheManager {
 
     this.store.set(cacheKey, {
       createdDate: new Date(),
-      cacheValue: val
+      cacheValue: val,
     });
   }
 

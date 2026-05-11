@@ -9,7 +9,7 @@ import {
   renderLinksAndScripts,
   isPreview,
   isWithoutHTML,
-  isWithoutState
+  isWithoutState,
 } from './universal/service/RenderService';
 import Component from './universal/model/Component';
 import logger from './universal/utils/logger';
@@ -25,7 +25,7 @@ export default async (req, res) => {
     try {
       // URL encoded form data'yı parse et
       const parsedBody = {};
-      rawBody.split('&').forEach(pair => {
+      rawBody.split('&').forEach((pair) => {
         const [key, value] = pair.split('=');
         if (key && value !== undefined) {
           // URL decode et
@@ -37,11 +37,11 @@ export default async (req, res) => {
       console.log('Form data parse hatası:', error);
     }
   }
-  
+
   const isWithoutStateValue = isWithoutState(req.query);
   const pathParts = xss(req.path)
     .split('/')
-    .filter(part => part);
+    .filter((part) => part);
   const componentPath = `/${pathParts.join('/')}`;
   const routeInfo = matchUrlInRouteConfigs(componentPath);
 
@@ -52,11 +52,9 @@ export default async (req, res) => {
       path: xss(path),
       query: JSON.parse(xss(JSON.stringify(req.query))),
       cookies: xss(JSON.stringify(req.cookies)),
-      url: xss(req.url)
-        .replace(componentPath, '/')
-        .replace('//', '/'),
+      url: xss(req.url).replace(componentPath, '/').replace('//', '/'),
       userAgent: Buffer.from(req.headers['user-agent'], 'utf-8').toString('base64'),
-      isWithoutState: isWithoutStateValue
+      isWithoutState: isWithoutStateValue,
     };
 
     const component = new Component(routeInfo.path);
@@ -68,7 +66,7 @@ export default async (req, res) => {
     } catch (exception) {
       logger.exception(exception);
       return res.status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR).json({
-        message: exception.message
+        message: exception.message,
       });
     }
 
@@ -81,7 +79,7 @@ export default async (req, res) => {
       componentName,
       seoState,
       isPreviewQuery,
-      responseOptions
+      responseOptions,
     } = renderResponse;
 
     const statusCode = responseOptions?.isPartialContent
@@ -110,7 +108,7 @@ export default async (req, res) => {
     }
   } else {
     res.status(HTTP_STATUS_CODES.NOT_FOUND).json({
-      message: 'not found'
+      message: 'not found',
     });
   }
 };

@@ -1,6 +1,7 @@
-import React from 'react';
-import piramiteLogo from '../../assets/piramite-logo.svg';
+import PiramiteLogo from '../../assets/piramite-logo.svg';
 
-const Logo = (props) => <piramiteLogo {...props} />;
+function Logo(props) {
+  return <PiramiteLogo {...props} />;
+}
 
-export default Logo; 
+export default Logo;

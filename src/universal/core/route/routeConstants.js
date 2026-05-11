@@ -3,13 +3,13 @@ const components = require('__V_COMPONENTS__');
 const ROUTE_PATHS = {};
 const ROUTE_CONFIGS = {};
 
-Object.keys(components.default).forEach(path => {
+Object.keys(components.default).forEach((path) => {
   const info = components.default[path];
   ROUTE_PATHS[info.name] = path;
   ROUTE_CONFIGS[path] = {
     routeName: info.name,
     isPublic: true,
-    exact: true
+    exact: true,
   };
 });
 

@@ -6,11 +6,10 @@ const { merge } = require("webpack-merge");
 const AssetsPlugin = require("assets-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const TerserWebpackPlugin = require("terser-webpack-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
-const { ESBuildMinifyPlugin } = require("esbuild-loader");
+const { EsbuildPlugin } = require("esbuild-loader");
 
 require("intersection-observer");
 
@@ -163,14 +162,7 @@ const clientConfig = merge(commonConfig, piramiteClientConfig, {
       {
         test: /\.css$/,
         use: [
-          isDebug
-            ? {
-              loader: "style-loader",
-              options: {
-                injectType: "singletonStyleTag"
-              }
-            }
-            : MiniCssExtractPlugin.loader,
+          MiniCssExtractPlugin.loader,
           {
             loader: "css-loader",
             options: {
@@ -181,21 +173,16 @@ const clientConfig = merge(commonConfig, piramiteClientConfig, {
           },
           {
             loader: "postcss-loader",
-            options: postCssConfig
+            options: {
+              postcssOptions: postCssConfig,
+            },
           }
         ]
       },
       {
         test: /\.scss$/,
         use: [
-          isDebug
-            ? {
-              loader: "style-loader",
-              options: {
-                injectType: "singletonStyleTag"
-              }
-            }
-            : MiniCssExtractPlugin.loader,
+          MiniCssExtractPlugin.loader,
           {
             loader: "css-loader",
             options: {
@@ -211,7 +198,9 @@ const clientConfig = merge(commonConfig, piramiteClientConfig, {
           },
           {
             loader: "postcss-loader",
-            options: postCssConfig
+            options: {
+              postcssOptions: postCssConfig,
+            },
           },
           {
             loader: "sass-loader",
@@ -249,16 +238,9 @@ const clientConfig = merge(commonConfig, piramiteClientConfig, {
   optimization: {
     // emitOnErrors: false,
     minimizer: [
-      new ESBuildMinifyPlugin({
+      new EsbuildPlugin({
         target: "es2015",
         css: true
-      }),
-      new TerserWebpackPlugin({
-        terserOptions: {
-          mangle: {
-            safari10: true
-          }
-        }
       }),
       new CssMinimizerPlugin({})
     ]
@@ -295,21 +277,21 @@ const clientConfig = merge(commonConfig, piramiteClientConfig, {
         }, {})
     }),
 
-    new CopyWebpackPlugin([
-      {
-        from: piramiteConfig.output.client.publicPath,
-        to: piramiteConfig.publicDistFolder
-      }
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: piramiteConfig.output.client.publicPath,
+          to: piramiteConfig.publicDistFolder
+        }
+      ]
+    }),
 
-    ...(isDebug
-      ? [new webpack.HotModuleReplacementPlugin()]
-      : [
-        new MiniCssExtractPlugin({
-          filename: "[name].css",
-          chunkFilename: "[id]-[contenthash].css"
-        })
-      ]),
+    ...(isDebug ? [new webpack.HotModuleReplacementPlugin()] : []),
+
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+      chunkFilename: isDebug ? "[id].css" : "[id]-[contenthash].css",
+    }),
 
     new AssetsPlugin({
       path: piramiteConfig.inputFolder,

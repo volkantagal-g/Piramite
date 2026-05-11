@@ -26,12 +26,9 @@ async function start() {
 
   hiddie.use(
     webpackDevMiddleware(compiler, {
-      quiet: true,
-      noInfo: true,
-      lazy: false,
-      writeToDisk: true,
-      serverSideRender: false,
-      publicPath: webpackClientConfig.output.publicPath
+      publicPath: webpackClientConfig.output.publicPath,
+      stats: false,
+      writeToDisk: true
     })
   );
 
