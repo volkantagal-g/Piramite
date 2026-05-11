@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import { compose } from 'compose-middleware';
 import compression from 'compression';
 import path from 'path';
+import cluster from 'cluster';
 import Hiddie from 'hiddie';
 import http from 'http';
 import serveStatic from 'serve-static';
@@ -190,7 +191,11 @@ const locals = async (req, res, next) => {
   next();
 };
 
-if (process.env.NODE_ENV === 'production') {
+// Production entry (main.js) loads this module only inside cluster workers.
+// Do not gate on process.env.NODE_ENV: dev webpack bundles inline it as
+// "development", and writeToDisk can overwrite dist — then `piramite --start`
+// would run a bundle that never calls listen().
+if (cluster.isWorker) {
   const hiddie = Hiddie(async (err, req, res) => {
     res.end();
   });
