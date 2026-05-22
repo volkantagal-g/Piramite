@@ -32,7 +32,7 @@ You can use Piramite if you need a micro frontend framework that provides follow
 
 ## Installation
 
-Piramite requires [Node.js](https://nodejs.org/) v20.19.3+ to run.
+Piramite requires [Node.js](https://nodejs.org/) v22+ to run.
 
 Install the Piramite.
 

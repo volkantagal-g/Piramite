@@ -1,13 +1,13 @@
 {
   "name": "@getir/piramitejs",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "main": "src/index.js",
   "author": "",
   "bin": {
     "piramite": "./bin/piramite.js"
   },
   "engines": {
-    "node": ">= v20.10.0",
+    "node": ">=22.0.0",
     "npm": ">=10.8.2"
   },
   "publishConfig": {
@@ -61,7 +61,7 @@
     "husky": "^3.1.0",
     "identity-obj-proxy": "3.0.0",
     "intersection-observer": "0.7.0",
-    "js-cookie": "^2.2.1",
+    "js-cookie": "^3.0.7",
     "mini-css-extract-plugin": "^2.9.2",
     "newrelic": "^9.1.0",
     "postcss": "^8.5.10",
@@ -118,6 +118,24 @@
     "typescript": "^5.8.3"
   },
   "overrides": {
+    "react-router": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    },
+    "react-router-dom": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    },
+    "mini-create-react-context": {
+      "react": "$react"
+    },
+    "@cfaester/enzyme-adapter-react-18": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    },
+    "react-shallow-renderer": {
+      "react": "$react"
+    },
     "hiddie": {
       "path-to-regexp": "6.3.0"
     },
@@ -125,7 +143,8 @@
     "serialize-javascript": "^7.0.5",
     "cookie": "^0.7.2",
     "send": "^0.19.0",
-    "protobufjs": "^7.5.5",
+    "protobufjs": "^7.5.8",
+    "ws": "^8.20.1",
     "handlebars": "^4.7.9",
     "lodash": "^4.18.1",
     "follow-redirects": "^1.15.9",
@@ -147,6 +166,7 @@
     "yaml": "^2.7.0"
   },
   "scripts": {
+    "preinstall": "node scripts/check-engines.js",
     "lint": "npm run eslint && npm run prettier",
     "build": "node ./bin/piramite.js --config ./demo/piramite-app.config.js --bundle",
     "start": "node ./bin/piramite.js --config ./demo/piramite-app.config.js --start",
@@ -164,6 +184,5 @@
     "commitLimit": false,
     "template": "changelog-template.hbs",
     "package": true
-  },
-  "packageManager": "yarn@4.9.2+sha512.1fc009bc09d13cfd0e19efa44cbfc2b9cf6ca61482725eb35bbc5e257e093ebf4130db6dfe15d604ff4b79efd8e1e8e99b25fa7d0a6197c9f9826358d4d65c3c"
+  }
 }

@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 
-require = require('esm')(module /*, options*/);
-
-// esm, require("node:path") vb. Node built-in öneklerini çözemediği için webpack-dev-middleware 7+ patlıyor.
+// Child webpack processes may resolve `node:` built-ins; patch before any require chain.
 const Module = require('module');
 const resolveFilename = Module._resolveFilename;
 Module._resolveFilename = function stripNodeBuiltinPrefix(request, parent, isMain, options) {
@@ -12,4 +10,5 @@ Module._resolveFilename = function stripNodeBuiltinPrefix(request, parent, isMai
   return resolveFilename.call(this, request, parent, isMain, options);
 };
 
-require('../lib/cli').cli(process.argv);
+const { cli } = require('../lib/cli');
+cli(process.argv);
