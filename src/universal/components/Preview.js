@@ -11,7 +11,7 @@ export default (body, title = null) => {
     <!doctype html>
       <head>
         <title>Preview${additionalTitle}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
         <script>window.HBUS_LAZY = true;</script>
         ${appConfig.piramiteCommonUrl ? `<script src="${appConfig.piramiteCommonUrl}"></script>` : ''}
         ${cr(
